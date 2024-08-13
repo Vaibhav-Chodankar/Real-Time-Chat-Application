@@ -64,6 +64,12 @@ function Register(props) {
         setValues({ ...values, [e.target.name]: e.target.value })
     }
 
+    useEffect(() => {
+        if (localStorage.getItem('user')) {
+            navigate('/')
+        }
+    }, [])
+
     return (
         <>
             <FormContainer>
@@ -136,6 +142,7 @@ align-items: center;
         border-radius: 0.4rem;
         font-size: 1rem;
         text-transform: uppercase;
+        transition: 0.4s ease-in-out;
         &:hover{
             background-color: #4e0eff;
         }
