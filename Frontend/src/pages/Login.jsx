@@ -71,8 +71,8 @@ function Login(props) {
                         <img src={Logo} alt="logo" />
                         <h1>HOWDY</h1>
                     </div>
-                    <input type="text" name="username" onChange={e => handleInputChange(e)} placeholder='Username' required />
-                    <input type="password" name="password" onChange={e => handleInputChange(e)} placeholder='Password' required />
+                    <input type="text" name="username" onChange={e => handleInputChange(e)} placeholder='Username' autocomplete='off' required />
+                    <input type="password" name="password" onChange={e => handleInputChange(e)} placeholder='Password' autocomplete='off' required />
                     <button type='submit'>Login</button>
                     <span>Don't have an account ? <Link to='/register'>register</Link> </span>
                 </form>
@@ -99,6 +99,7 @@ align-items: center;
  }
  img{
     height: 5rem;
+    border-radius: 25%;
  }
  h1{
     color: white;

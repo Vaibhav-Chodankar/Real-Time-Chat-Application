@@ -41,3 +41,35 @@ module.exports.login = async (req, res, next) => {
         next(e);
     }
 }
+
+module.exports.setAvatar = async (req, res, next) => {
+    try {
+        const userId = req.params.id;
+        const { image } = req.body;
+        const updateUser = await UserModel.findByIdAndUpdate(userId, {
+            isAvatarImageSet: true,
+            avatarImage: image
+        });
+        console.log(updateUser);
+        res.send({
+            isSet: updateUser.isAvatarImageSet,
+            image: updateUser.avatarImage
+        });
+    } catch (e) {
+        next(e);
+    }
+}
+
+module.exports.allUsers = async (req, res, next) => {
+    try {
+        const users = await UserModel.find({ _id: { $ne: req.params.id } }).select([
+            'username',
+            'email',
+            'avatarImage',
+            '_id'
+        ]);
+        res.send(users);
+    } catch (e) {
+        next(e);
+    }
+}

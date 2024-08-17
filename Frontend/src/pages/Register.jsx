@@ -40,7 +40,7 @@ function Register(props) {
             }
             if (data.status === true) {
                 localStorage.setItem('user', JSON.stringify(data.user));
-                navigate('/');
+                navigate('/setAvatar');
             }
         }
     }
@@ -78,10 +78,10 @@ function Register(props) {
                         <img src={Logo} alt="logo" />
                         <h1>HOWDY</h1>
                     </div>
-                    <input type="text" name="username" onChange={e => handleInputChange(e)} placeholder='Username' required />
-                    <input type="email" name="email" onChange={e => handleInputChange(e)} placeholder='Email' required />
-                    <input type="password" name="password" onChange={e => handleInputChange(e)} placeholder='Password' required />
-                    <input type="password" name="confirmPassword" onChange={e => handleInputChange(e)} placeholder='Confirm Password' required />
+                    <input type="text" name="username" onChange={e => handleInputChange(e)} placeholder='Username' autocomplete='off' required />
+                    <input type="email" name="email" onChange={e => handleInputChange(e)} placeholder='Email' autocomplete='off' required />
+                    <input type="password" name="password" onChange={e => handleInputChange(e)} placeholder='Password' autocomplete='off' required />
+                    <input type="password" name="confirmPassword" onChange={e => handleInputChange(e)} placeholder='Confirm Password' autocomplete='off' required />
                     <button type='submit'>Create User</button>
                     <span>Already have an account ? <Link to='/login'>Login</Link> </span>
                 </form>
@@ -108,6 +108,7 @@ align-items: center;
  }
  img{
     height: 5rem;
+    border-radius: 25%;
  }
  h1{
     color: white;

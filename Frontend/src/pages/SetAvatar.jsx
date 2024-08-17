@@ -24,9 +24,34 @@ function SetAvatar(props) {
         theme: 'dark'
     }
 
+    useEffect(() => {
+        const checkUser = () => {
+            if (!localStorage.getItem('user')) {
+                navigate('/login');
+            }
+        }
+        checkUser();
+    }, []);
+
     const setProfilePicture = async () => {
         if (selectedAvatar === undefined) {
             toast.error("Please select an avatar", toastOpts);
+        } else {
+            const user = await JSON.parse(localStorage.getItem('user'));
+            await axios.post(`${setAvatarRoute}/${user._id}`, {
+                image: avatars[selectedAvatar]
+            })
+                .then((data) => {
+                    console.log(data);
+                    if (data.data.isSet) {
+                        user.isAvatarImageSet = true;
+                        user.avatarImage = data.data.image;
+                        localStorage.setItem('user', JSON.stringify(user));
+                        navigate('/')
+                    } else {
+                        toast.error('Error setting avatar. Please try again!', toastOpts);
+                    }
+                })
         }
     };
 
@@ -36,7 +61,6 @@ function SetAvatar(props) {
             for (let i = 0; i < 4; i++) {
                 await axios.get(`${Api}/${Math.round(Math.random() * 1000)}`)
                     .then((result) => {
-                        console.log(result);
                         const buffer = new Buffer(result.data);
                         data.push(buffer.toString('base64'));
                     })
