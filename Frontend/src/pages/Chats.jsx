@@ -26,14 +26,14 @@ function Chats(props) {
             }
         }
         checkUser();
-    }, []);
+    }, [navigate]);
 
     useEffect(() => {
         if (currentUser) {
             socket.current = io(host);
             socket.current.emit('add-user', currentUser._id);
         }
-    }, [currentUser])
+    }, [currentUser]);
 
     useEffect(() => {
         const fetchUsers = async () => {
@@ -52,25 +52,25 @@ function Chats(props) {
             }
         }
         fetchUsers();
-    }, [currentUser]);
+    }, [currentUser, navigate]);
 
     const handleChatChange = (chat) => {
         setCurrentChat(chat);
-    }
+    };
 
     return (
         <Container>
-            <div className="container">
+            <div className="chat-container">
                 {isLoading ? (
-                    <div>Loading...</div>
+                    <div className="loading">Loading...</div>
                 ) : (
                     <>
                         <Contacts contacts={contacts} currentUser={currentUser} changeChat={handleChatChange} />
-                        {
-                            currentChat === undefined ?
-                                <Welcome currentUser={currentUser} /> :
-                                <ChatContainer currentChat={currentChat} currentUser={currentUser} socket={socket} />
-                        }
+                        {currentChat === undefined ? (
+                            <Welcome currentUser={currentUser} />
+                        ) : (
+                            <ChatContainer currentChat={currentChat} currentUser={currentUser} socket={socket} />
+                        )}
                     </>
                 )}
             </div>
@@ -84,18 +84,43 @@ const Container = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
-  gap: 1rem;
   align-items: center;
   background-color: #131324;
-  .container {
+  padding: 1rem;
+
+  .chat-container {
     height: 85vh;
     width: 85vw;
     background-color: #00000076;
     display: grid;
     grid-template-columns: 25% 75%;
+    border-radius: 0.5rem;
+    overflow: hidden;
+
     @media screen and (min-width: 720px) and (max-width: 1080px) {
       grid-template-columns: 35% 65%;
     }
+
+    @media screen and (max-width: 720px) {
+      grid-template-columns: 100%;
+      grid-template-rows: 40% 60%;
+      height: 90vh;
+    }
+
+    @media screen and (max-width: 480px) {
+      grid-template-columns: 100%;
+      grid-template-rows: 45% 55%;
+      width: 95vw;
+    }
+  }
+
+  .loading {
+    font-size: 1.5rem;
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
   }
 `;
 
