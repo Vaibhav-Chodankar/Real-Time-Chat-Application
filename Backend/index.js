@@ -12,7 +12,7 @@ app.use(express.json());
 
 // CORS configuration
 app.use(cors({
-    origin: process.env.CLIENT_URL || 'http://localhost:3000',  // Allow your frontend's URL
+    origin: process.env.CLIENT_URL || 'http://localhost:5000',  // Allow your frontend's URL
     credentials: true,
 }));
 
@@ -39,7 +39,7 @@ const server = app.listen(PORT, () => {
 // Socket.io setup with CORS
 const io = socket(server, {
     cors: {
-        origin: process.env.CLIENT_URL || 'http://localhost:3000',  // Allow your frontend's URL
+        origin: process.env.CLIENT_URL || 'http://localhost:5000',  // Allow your frontend's URL
         methods: ['GET', 'POST'],
         credentials: true,
     },
